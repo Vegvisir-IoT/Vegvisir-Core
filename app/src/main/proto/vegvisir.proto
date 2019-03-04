@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+
+package vegvisir.lower.datatype;
+
+import "google/protobuf/timestamp.proto";
+import "common.proto";
+import "vegvisirLower.proto";
+
+option java_multiple_files = true;
+option java_package = "com.vegvisir.core.datatype.proto";
+option java_outer_classname = "VegvisirCoreDatatypeProto";
+option objc_class_prefix = "VEGVISIR";
+
+message Block {
+  string userid = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  vegvisir.lower.datatype.Location location = 3;
+  repeated charlotte.Reference parents = 4;
+  repeated Transaction transactions = 5;
+  charlotte.Signature signature = 6;
+}
+
+message Transaction {
+  string placeholder = 1;
+}
+
