@@ -17,7 +17,6 @@ option objc_class_prefix = "HETCONS";
 
 package charlotte;
 
-
 import "common.proto";
 
 // Utils
