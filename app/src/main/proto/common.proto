@@ -2,8 +2,8 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.isaacsheff.charlotte.proto";
-option java_outer_classname = "CharlotteProto";
-option objc_class_prefix = "CHARLOTTE";
+option java_outer_classname = "CharlotteCommonProto";
+option objc_class_prefix = "CHARLOTTE_COMMON";
 
 package charlotte;
 
@@ -82,9 +82,9 @@ message IntegrityAttestation {
     repeated Reference message2b = 2;
   }
   oneof integrityattestationtype_oneof {
-    SignedChainSlot signedChainSlot = 1;
-    SignedTimestampedReferences signedTimestampedReferences = 2;
-    SignedGitSimBranch signedGitSimBranch = 3;
+    // SignedChainSlot signedChainSlot = 1;
+    // SignedTimestampedReferences signedTimestampedReferences = 2;
+    // SignedGitSimBranch signedGitSimBranch = 3;
     HetconsAttestation hetconsAttestation = 4;
   }
 }

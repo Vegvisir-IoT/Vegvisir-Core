@@ -12,8 +12,8 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.isaacsheff.charlotte.proto";
-option java_outer_classname = "CharlotteProto";
-option objc_class_prefix = "CHARLOTTE";
+option java_outer_classname = "HetconsProto";
+option objc_class_prefix = "HETCONS";
 
 package charlotte;
 

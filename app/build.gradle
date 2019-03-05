@@ -1,30 +1,32 @@
 plugins {
     id 'java'
-    id 'application'
+    // id 'application'
     id 'com.google.protobuf'
 }
 
+
 protobuf {
+
     protoc {
         // Download from repositories
-        artifact = 'com.google.protobuf:protoc:3.0.0'
+        artifact = 'com.google.protobuf:protoc:3.6.1'
     }
 
     plugins {
-        javalite {
+//        javalite {
             // The codegen for lite comes as a separate artifact
-            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
-        }
+//            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+//       }
     }
 
     generateProtoTasks {
         all().each { task ->
             task.builtins {
                 python { }
-                remove java
+//                remove java
             }
             task.plugins {
-                javalite {}
+ //               javalite {}
             }
         }
     }
@@ -32,5 +34,10 @@ protobuf {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.google.protobuf:protobuf-lite:3.0.0'
+    // implementation 'com.google.protobuf:protobuf-lite:3.0.0'
+    // append *.proto files to --proto_path
+	compile files("src/main/proto")
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.6.1'
+
+
 }
