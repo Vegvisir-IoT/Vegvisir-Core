@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package overhaul.protos;
+
+import "charlottewrapper.proto";
+
+message BlockHash {
+    bytes hash = 1;
+}
+
+// These are simply wrapped Charlotte blocks being traded.
+message VegvisirBlocks {
+    Block blocks = 1;
+}
+
+// Types of requests that can be received from peer.
+message PeerRequest{
+    
+    enum RequestType {
+        SEND_FRONTIER_SET = 0;
+        SEND_BCHASHES = 1;
+        SEND_BLOCK = 2;
+        ADD_BLOCK = 3;
+        CREATE_POW = 4;
+        SEND_REQUEST_SET_SIZE = 5;
+        RECONCILIATION_NEEDED = 6;
+        READY_FOR_PROTOCOL = 7;
+    }
+
+    RequestType request_type = 1;
+    repeated BlockHash target_hashes = 2;
+    repeated VegvisirBlocks blocks_to_add = 3;
+}
+
+
+// Types of responses that can be sent to peer
+message FrontierSet {
+    repeated BlockHash block_hash = 1;
+}
+
+message SendBlockchainHashes {
+    repeated BlockHash bc_hash = 1;
+}
+
+message SendBlock {
+    repeated VegvisirBlocks block = 1;
+}
+
+message AddBlock {
+    repeated VegvisirBlocks block = 1;
+}
+
+message RequestSetSize {
+    int32 rset_size = 11;
+}
+
+// Types of responses that can be sent to peer.
+message PeerResponse{
+    oneof peer_response_types {
+        FrontierSet frontier_set_response = 1;
+        SendBlockchainHashes bc_hashes_response = 2;
+        SendBlock send_block_response = 3;
+        AddBlock add_block = 4;
+        RequestSetSize r_set_size_response = 6;
+    }
+}

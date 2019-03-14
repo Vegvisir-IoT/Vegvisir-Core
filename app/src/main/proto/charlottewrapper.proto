@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.vegvisir.core.datatype.proto";
+option java_outer_classname = "VegvisirCoreDatatypeProto";
+option objc_class_prefix = "VEGVISIR";
+
+package overhaul.protos;
+
+import "common.proto";
+import "vegvisirlower.proto";
+
+message Transaction {
+    string userid = 1;
+    int64 timestamp = 2;
+    int32 recordid = 3;
+    bytes comment = 4;
+}
+
+
+message Block {
+  string userid = 1;
+  Timestamp timestamp = 2;
+  Location location = 3;
+  repeated charlotte.Reference parents = 4;
+  repeated Transaction transactions = 5;
+  charlotte.Signature signature = 6;
+}
+
+message GenesisBlock {
+    string userid = 1;
+    int64 timestamp = 2;
+
+    message Certificate {
+        string userid = 9;
+        string public_key = 10;
+        bytes signature = 11;
+    }
+
+    Certificate ca_certificate = 3;
+    repeated Certificate certlist = 4;
+
+}
