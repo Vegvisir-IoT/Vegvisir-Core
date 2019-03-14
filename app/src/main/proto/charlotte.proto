@@ -9,6 +9,7 @@ package charlotte;
 
 import "common.proto";
 import "hetcons.proto";
+import "vegvisir.proto";
 
 message SignedGitSimCommit {
   message GitSimCommit {
@@ -37,6 +38,7 @@ message Block {
     string str = 3; // why not?
     HetconsBlock hetconsBlock = 4;
     SignedGitSimCommit signedGitSimCommit= 5;
+    vegvisir.core.datatype.Block vegvisirBlock = 6;
     // This is probably the best place for an Any type, but for now, keep it minimum
   }
 }

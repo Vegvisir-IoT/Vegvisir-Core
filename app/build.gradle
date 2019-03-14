@@ -25,7 +25,5 @@ dependencies {
 
     // append all proto files to --proto_path
     compile files("src/main/proto")
-    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.6.1'
-
-
+    implementation 'com.google.protobuf:protobuf-java:3.6.1'
 }
