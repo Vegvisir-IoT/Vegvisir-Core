@@ -1,6 +1,5 @@
-package blockdag;
+package com.vegvisir.core.blockdag;
 
-import com.google.protobuf.MessageLite;
 import com.isaacsheff.charlotte.proto.Reference;
 import com.isaacsheff.charlotte.proto.Block;
 

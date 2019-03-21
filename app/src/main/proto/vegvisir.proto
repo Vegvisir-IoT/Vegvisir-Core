@@ -11,15 +11,31 @@ import "common.proto";
 import "vegvisirLower.proto";
 
 message Block {
-  string userid = 1;
-  vegvisir.lower.datatype.Timestamp timestamp = 2;
-  vegvisir.lower.datatype.Location location = 3;
-  repeated charlotte.Reference parents = 4;
-  repeated Transaction transactions = 5;
-  charlotte.Signature signature = 6;
+    message GenesisBlock {
+
+    }
+
+    message UserBlock {
+        string userid = 1;
+        vegvisir.lower.datatype.Timestamp timestamp = 2;
+        vegvisir.lower.datatype.Location location = 3;
+        repeated charlotte.Reference parents = 4;
+        repeated Transaction transactions = 5;
+    }
+
+    message Transaction {
+        string placeholder = 1;
+    }
+
+    charlotte.Signature signature = 1;
+
+    oneof blocktype_oneof {
+        GenesisBlock genesis_block = 2;
+        UserBlock block = 3;
+    }
+
 }
 
-message Transaction {
-  string placeholder = 1;
-}
+
+
 

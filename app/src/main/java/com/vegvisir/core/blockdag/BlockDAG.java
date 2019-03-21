@@ -1,11 +1,9 @@
-package blockdag;
+package com.vegvisir.core.blockdag;
 
 import com.isaacsheff.charlotte.proto.Block;
-import com.isaacsheff.charlotte.proto.Hash;
 import com.isaacsheff.charlotte.proto.Reference;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 

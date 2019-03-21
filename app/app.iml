@@ -29,5 +29,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: protobuf-java-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: _Users_xinwenwang_Project_Vegvisir_Vegvisir_Core_app_src_main_proto" level="project" />
+    <orderEntry type="library" name="Bundled Protobuf Distribution" level="application" />
   </component>
 </module>
