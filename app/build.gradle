@@ -14,16 +14,17 @@ protobuf {
     generateProtoTasks {
         all().each { task ->
             task.builtins {
-                python { }
+//                python { }
             }
         }
     }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation project(':vegvisirAndroid')
     // append all proto files to --proto_path
-    compile files("src/main/proto")
+    compile files('src/main/proto')
     implementation 'com.google.protobuf:protobuf-java:3.6.1'
 }
