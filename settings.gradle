@@ -8,6 +8,5 @@
  */
 
  include ':app'
-// include ':deps.Vegvisir-Android-Lower-Level'
 
 rootProject.name = 'Vegvisir-Core'
