@@ -8,7 +8,7 @@ option objc_class_prefix = "VEGVISIR";
 package vegvisir.core.datatype;
 
 import "common.proto";
-import "vegvisirNetwork.proto";
+import "vegvisirCommon.proto";
 
 message Block {
     message GenesisBlock {
@@ -17,8 +17,8 @@ message Block {
 
     message UserBlock {
         string userid = 1;
-        vegvisir.network.datatype.Timestamp timestamp = 2;
-        vegvisir.network.datatype.Location location = 3;
+        vegvisir.common.datatype.Timestamp timestamp = 2;
+        vegvisir.common.datatype.Location location = 3;
         repeated charlotte.Reference parents = 4;
         repeated Transaction transactions = 5;
     }
@@ -35,6 +35,7 @@ message Block {
     }
 
 }
+
 
 
 

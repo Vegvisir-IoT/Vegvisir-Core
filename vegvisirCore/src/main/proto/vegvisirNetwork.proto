@@ -7,8 +7,14 @@ option java_package = "com.vegvisir.network.datatype.proto";
 option java_outer_classname = "VegvisirNetworkDatatypeProto";
 option objc_class_prefix = "VEGVISIR";
 
-message VegvisirProtocolMessage {
+import "vegvisirCommon.proto";
+import "charlotte.proto";
 
+
+message VegvisirProtocolMessage {
+    vegvisir.common.datatype.ControlSignal cmd = 1;
+    repeated charlotte.Block blocks = 2;
+    vegvisir.common.datatype.ProtocolVersion version = 3;
 }
 
 message Payload {
@@ -35,34 +41,13 @@ message PeerView {
   repeated Peer connected_peers = 2;
 }
 
-message Timestamp {
-  int64 utc_time = 1;
-  int64 elapsed_time = 2;
-}
 
-message Location {
-  float longitude = 1;
-  float latitude = 2;
-  float altitude = 3;
-  Timestamp timestamp = 4;
-}
-
-message LocationRequestResponse {
-  oneof content_oneof {
-    Location location = 1;
-    string error_message = 2;
-  }
-}
-
-message LocationServiceNotAvailableException {
-  string error_message = 1;
-}
 
 // EndPointConnection
 message Connection {
   Identifier remote_id = 1;
-  Timestamp connected_time = 2;
-  Timestamp wakeup_time = 3;
+  vegvisir.common.datatype.Timestamp connected_time = 2;
+  vegvisir.common.datatype.Timestamp wakeup_time = 3;
 }
 
 message ConnectionCloseResponse {

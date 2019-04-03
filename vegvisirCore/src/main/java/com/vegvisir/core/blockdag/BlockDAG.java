@@ -20,6 +20,24 @@ public class BlockDAG {
         blockStorage.put(BlockUtil.byRef(genesisBlock), genesisBlock);
     }
 
+    public BlockDAG() {
+        this(null);
+    }
+
+    /**
+     * Only set genesis block once, if genesis block is not set at instantiation stage.
+     * @param genesisBlock
+     * @return true if set successfully.
+     */
+    public synchronized boolean setOnceGenesisBlock(Block genesisBlock) {
+        if (this.genesisBlock != null) {
+            this.genesisBlock = genesisBlock;
+            return true;
+        } else
+            return false;
+    }
+
+
     public boolean addBlock(Block block) {
         return blockStorage.putIfAbsent(BlockUtil.byRef(block), block) == null;
     }
