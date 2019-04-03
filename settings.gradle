@@ -7,6 +7,11 @@
  * in the user manual at https://docs.gradle.org/5.2.1/userguide/multi_project_builds.html
  */
 
- include ':app'
+ include ':app', ':vegvisirGossip'
 
 rootProject.name = 'Vegvisir-Core'
+
+// include ':vegvisir-gossip'
+
+//project(':vegvisir-gossip').projectDir = new File(settingsDir, "./deps/Vegvisir-Gossip")
+project(':vegvisirGossip').projectDir = new File('deps/Vegvisir-Gossip/vegvisirGossip')

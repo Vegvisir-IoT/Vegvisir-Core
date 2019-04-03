@@ -1,0 +1,3 @@
+[submodule "deps/Vegvisir-Gossip"]
+	path = deps/Vegvisir-Gossip
+	url = git@github.com:JASONews/Vegvisir-Gossip.git

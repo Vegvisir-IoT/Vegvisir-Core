@@ -1,12 +1,10 @@
 syntax = "proto3";
 
-//import "blockchain.proto"
-
-package vegvisir.lower.datatype;
+package vegvisir.network.datatype;
 
 option java_multiple_files = true;
-option java_package = "com.vegvisir.lower.datatype.proto";
-option java_outer_classname = "VegvisirLowerDatatypeProto";
+option java_package = "com.vegvisir.network.datatype.proto";
+option java_outer_classname = "VegvisirNetworkDatatypeProto";
 option objc_class_prefix = "VEGVISIR";
 
 message VegvisirProtocolMessage {

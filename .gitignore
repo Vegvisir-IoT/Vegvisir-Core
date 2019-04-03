@@ -6,3 +6,5 @@ build
 
 # Ignore ide directory
 .idea
+*.iml
+local.properties
