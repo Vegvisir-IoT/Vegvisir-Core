@@ -51,7 +51,7 @@ public class ReconciliationV1 extends ReconciliationProtocol
     {
         com.vegvisir.common.datatype.proto.ProtocolVersion version = com.vegvisir.common.datatype.proto.ProtocolVersion.newBuilder()
                 .setMajor(getVersion().getMajor())
-                .setMinor(getVersion().getMajor())
+                .setMinor(getVersion().getMinor())
                 .setPatch(getVersion().getPatch())
                 .build();
         VegvisirProtocolMessage message = com.vegvisir.network.datatype.proto.VegvisirProtocolMessage.newBuilder()
