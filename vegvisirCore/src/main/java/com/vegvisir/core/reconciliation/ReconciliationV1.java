@@ -5,6 +5,10 @@ import com.vegvisir.core.blockdag.BlockDAG;
 import com.vegvisir.network.datatype.proto.Payload;
 import com.vegvisir.network.datatype.proto.VegvisirProtocolMessage;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 /**
  * Reconciliation protocol implementation version 1.
  * In this version, we send all blocks to the remote side and that is.
@@ -12,8 +16,12 @@ import com.vegvisir.network.datatype.proto.VegvisirProtocolMessage;
 public class ReconciliationV1 extends ReconciliationProtocol
 {
 
+    private BlockingQueue<String> completionQueue;
+    Thread dispatchThread;
+
     public ReconciliationV1() {
         super(1, 0, 0);
+        completionQueue = new LinkedBlockingQueue<>();
     }
 
     @Override
@@ -22,7 +30,7 @@ public class ReconciliationV1 extends ReconciliationProtocol
         this.dag = myDAG;
         this.remoteId = remoteConnectionID;
 
-        gossipLayer.setHandlerForPeerMessage(remoteId, this::dispatcherHandler);
+        dispatchThread = gossipLayer.setHandlerForPeerMessage(remoteId, this::dispatcherHandler);
 
         sendVersion();
 
@@ -37,6 +45,18 @@ public class ReconciliationV1 extends ReconciliationProtocol
             }
         }
         sendAllBlocks();
+
+        try {
+            /* Take for send complete */
+            completionQueue.take();
+            /* Take for receive complete */
+            completionQueue.take();
+        } catch (InterruptedException ex) {
+            return;
+        }
+
+        dispatchThread.interrupt();
+        gossipLayer.disconnect(remoteId);
     }
 
     protected Version checkVersion(Version remoteVersion) {
@@ -79,6 +99,15 @@ public class ReconciliationV1 extends ReconciliationProtocol
                 }
                 break;
             case ADD_BLOCKS:
+                synchronized (lock) {
+                    if (this.runningVersion == null) {
+                        try {
+                            lock.wait();
+                        } catch (InterruptedException ex) {
+
+                        }
+                    }
+                }
                 if(remoteVersion.compareTo(this.runningVersion) != 0)
                 {
                     /* all operations other than sync version will be run with the same version between two nodes. This is because the first step for running reconciliation is syncing up versions */
@@ -92,6 +121,7 @@ public class ReconciliationV1 extends ReconciliationProtocol
 
     protected void handleAddBlocks(Iterable<com.isaacsheff.charlotte.proto.Block> blocks) {
         dag.addAllBlocks(blocks);
+        completionQueue.add("Add");
     }
 
     /**
@@ -107,5 +137,6 @@ public class ReconciliationV1 extends ReconciliationProtocol
                 .setMessage(message)
                 .build();
         this.gossipLayer.sendToPeer(remoteId, payload);
+        completionQueue.add("Send");
     }
 }
