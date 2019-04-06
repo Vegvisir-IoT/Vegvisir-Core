@@ -98,5 +98,17 @@ public abstract class ReconciliationProtocol {
             }
             return 0;
         }
+
+        /**
+         * Generate a protobuf ProtocolVersion Object for serialization.
+         * @return a ProtocolVersion object with this version info.
+         */
+        public com.vegvisir.common.datatype.proto.ProtocolVersion toProtoVersion() {
+            return com.vegvisir.common.datatype.proto.ProtocolVersion.newBuilder()
+                    .setMajor(getMajor())
+                    .setMinor(getMinor())
+                    .setPatch(getPatch())
+                    .build();
+        }
     }
 }

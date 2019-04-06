@@ -101,6 +101,7 @@ public class ReconciliationV1 extends ReconciliationProtocol
          VegvisirProtocolMessage message = VegvisirProtocolMessage.newBuilder()
                  .addAllBlocks(this.dag.getAllBlocks())
                  .setCmd(ControlSignal.ADD_BLOCKS)
+                 .setVersion(this.runningVersion.toProtoVersion())
                  .build();
         Payload payload = Payload.newBuilder()
                 .setMessage(message)
