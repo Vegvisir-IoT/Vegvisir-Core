@@ -76,7 +76,7 @@ public class VegvisirCore implements Runnable {
                     /* A new instance of protocol is created for each new connection.
                     * As a result, reconciliation process is stateless after it finishes.
                     * This can make it easy to update protocol version */
-                    protocol.newInstance().exchangeBlocks(dag, remoteId);
+                    protocol.newInstance().setGossipLayer(gossipLayer).exchangeBlocks(dag, remoteId);
                 }
             } catch (VegvisirReconciliationException ex) {
                 logger.info(ex.getLocalizedMessage());

@@ -31,8 +31,9 @@ public abstract class ReconciliationProtocol {
         this.setVersion(major, minor, patch);
     }
 
-    public void setGossipLayer(Gossip gossipLayer) {
+    public ReconciliationProtocol setGossipLayer(Gossip gossipLayer) {
         this.gossipLayer = gossipLayer;
+        return this;
     }
 
     /**
