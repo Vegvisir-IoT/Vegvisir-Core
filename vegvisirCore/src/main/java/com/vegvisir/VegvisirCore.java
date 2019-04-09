@@ -9,6 +9,8 @@ import com.vegvisir.gossip.adapter.NetworkAdapter;
 import com.isaacsheff.charlotte.proto.Block;
 
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -28,6 +30,8 @@ public class VegvisirCore implements Runnable {
     /* Protocol that this instance will use for reconciliation with peers */
     private Class<? extends ReconciliationProtocol> protocol;
 
+    private ExecutorService service;
+
     private static final Logger logger = Logger.getLogger(VegvisirCore.class.getName());
 
 
@@ -42,6 +46,7 @@ public class VegvisirCore implements Runnable {
         gossipLayer = new Gossip(adapter);
         dag = new BlockDAG(genesisBlock);
         this.protocol = protocol;
+        service = Executors.newCachedThreadPool();
     }
 
     public VegvisirCore(NetworkAdapter adapter, Class<ReconciliationProtocol> protocol) {
@@ -70,19 +75,22 @@ public class VegvisirCore implements Runnable {
 
         /* Main loop for reconciliation */
         while (true) {
-            try {
-                String remoteId = waitingForNewConnection();
-                if (remoteId != null) {
-                    /* A new instance of protocol is created for each new connection.
-                    * As a result, reconciliation process is stateless after it finishes.
-                    * This can make it easy to update protocol version */
-                    protocol.newInstance().setGossipLayer(gossipLayer).exchangeBlocks(dag, remoteId);
-                }
-            } catch (VegvisirReconciliationException ex) {
-                logger.info(ex.getLocalizedMessage());
-            } catch (InstantiationException ex) {
-            }
-            catch (IllegalAccessException ex) {
+            String remoteId = waitingForNewConnection();
+            if (remoteId != null) {
+                /* A new instance of protocol is created for each new connection.
+                 * As a result, reconciliation process is stateless after it finishes.
+                 * This can make it easy to update protocol version */
+                service.submit(() -> {
+                    try {
+                        gossipLayer.linkReconciliationInstanceWithConnection(remoteId, Thread.currentThread());
+                        protocol.newInstance().setGossipLayer(gossipLayer).exchangeBlocks(dag, remoteId);
+                    } catch (VegvisirReconciliationException ex) {
+                        logger.info(ex.getLocalizedMessage());
+                    } catch (InstantiationException ex) {
+                    }
+                    catch (IllegalAccessException ex) {
+                    }
+                });
             }
         }
     }
