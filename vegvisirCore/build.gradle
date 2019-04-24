@@ -29,6 +29,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    compile files('src/main/proto')
     implementation 'com.google.protobuf:protobuf-java:3.6.1'
+    implementation 'org.bouncycastle:bcpkix-jdk15on:1.60'
     implementation project(":vegvisirGossip")
     implementation project(":vegvisirDatatype")
 }

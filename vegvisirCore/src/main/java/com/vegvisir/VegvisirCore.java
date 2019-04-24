@@ -1,6 +1,7 @@
 package com.vegvisir;
 
 import com.vegvisir.core.blockdag.BlockDAG;
+import com.vegvisir.core.blockdag.BlockDAGv1;
 import com.vegvisir.core.reconciliation.ReconciliationProtocol;
 import com.vegvisir.core.reconciliation.ReconciliationV1;
 import com.vegvisir.core.reconciliation.exceptions.VegvisirReconciliationException;
@@ -44,7 +45,7 @@ public class VegvisirCore implements Runnable {
      */
     public VegvisirCore(NetworkAdapter adapter, Class<? extends ReconciliationProtocol> protocol, Block genesisBlock) {
         gossipLayer = new Gossip(adapter);
-        dag = new BlockDAG(genesisBlock);
+        dag = new BlockDAGv1(genesisBlock);
         this.protocol = protocol;
         service = Executors.newCachedThreadPool();
     }
