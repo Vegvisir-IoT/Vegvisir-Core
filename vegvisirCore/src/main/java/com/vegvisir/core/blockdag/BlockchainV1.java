@@ -11,8 +11,13 @@ import java.util.Date;
 
 public class BlockchainV1 extends Blockchain {
 
-    public BlockchainV1(BlockDAG dag) {
-        super(dag);
+    /**
+     * Constructor for a blockchain.
+     * @param dag the DAG owns this blockchain.
+     * @param cryptoId the id of the node owning this blockchain.
+     */
+    public BlockchainV1(BlockDAG dag, com.isaacsheff.charlotte.proto.CryptoId cryptoId) {
+        super(dag, cryptoId);
         this._blocks = new ArrayList<>();
     }
 
@@ -32,7 +37,7 @@ public class BlockchainV1 extends Blockchain {
      * @return a hash of new created block.
      */
     @Override
-    public Reference createBlock(Iterable<Block.Transaction> transactions, Iterable<Reference> parents) {
+    public synchronized Reference createBlock(Iterable<Block.Transaction> transactions, Iterable<Reference> parents) {
         Block.UserBlock content = Block.UserBlock.newBuilder().addAllParents(parents)
                 .setUserid(_dag.getConfig().getNodeId())
                 .setTimestamp(com.vegvisir.common.datatype.proto.Timestamp.newBuilder().setUtcTime(new Date().getTime()).build())
@@ -70,6 +75,7 @@ public class BlockchainV1 extends Blockchain {
      * @param block a valid block to be appended.
      * @return the hash of the given block.
      */
+    @Override
     public Reference appendBlock(com.isaacsheff.charlotte.proto.Block block) {
         Reference ref = _dag.putBlock(block);
         if (ref != null)

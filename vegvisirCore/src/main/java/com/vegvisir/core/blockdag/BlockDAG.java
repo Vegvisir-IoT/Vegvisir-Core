@@ -142,4 +142,13 @@ public abstract class BlockDAG {
     public Collection<Block> getAllBlocks() {
         return blockStorage.values();
     }
+
+
+    /**
+     * [V2 Features]
+     * @return a vector clock represented the frontier set of current node.
+     */
+    public com.vegvisir.core.datatype.proto.Block.VectorClock computeFrontierSet() {
+        return null;
+    }
 }

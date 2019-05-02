@@ -2,6 +2,7 @@ package com.vegvisir.core.config;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;
+import com.isaacsheff.charlotte.proto.CryptoId;
 
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
@@ -201,5 +202,13 @@ public class Config {
      */
     public byte[] getPublicKeyBytes() {
         return getPublicKey().getEncoded();
+    }
+
+
+    /**
+     * @return a charlotte crypto id object. This ID identify this node.
+     */
+    public CryptoId getCryptoId() {
+        return cryptoId;
     }
 }
