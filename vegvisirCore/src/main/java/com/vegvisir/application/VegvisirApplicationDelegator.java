@@ -6,7 +6,7 @@ import com.vegvisir.core.datatype.proto.Block;
 /**
  * Ideally, all applications should implement this interface.
  */
-public interface VegvisirApplication {
+public interface VegvisirApplicationDelegator {
 
 
     /**
