@@ -84,7 +84,7 @@ public abstract class Blockchain {
     public Block.VectorClock getVectorClock(int index) {
         if (index >= _blocks.size())
             return null;
-        return _dag.getBlock(_blocks.get(index)).getVegvisirBlock().getClock();
+        return _dag.getBlock(_blocks.get(index)).getVegvisirBlock().getBlock().getClock();
     }
 
 

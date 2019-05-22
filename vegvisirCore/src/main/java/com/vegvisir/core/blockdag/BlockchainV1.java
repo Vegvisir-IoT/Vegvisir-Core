@@ -40,6 +40,8 @@ public class BlockchainV1 extends Blockchain {
     public synchronized Reference createBlock(Iterable<Block.Transaction> transactions, Iterable<Reference> parents) {
         Block.UserBlock content = Block.UserBlock.newBuilder().addAllParents(parents)
                 .setUserid(_dag.getConfig().getNodeId())
+                .setCryptoID(this.getCryptoId())
+                .setClock(BlockUtil.incrementClock(this.getCryptoId(), this.getLastVectorClock()))
                 .setTimestamp(com.vegvisir.common.datatype.proto.Timestamp.newBuilder().setUtcTime(new Date().getTime()).build())
                 .addAllTransactions(transactions)
                 .build();
@@ -81,5 +83,16 @@ public class BlockchainV1 extends Blockchain {
         if (ref != null)
             _blocks.add(ref);
         return ref;
+    }
+
+
+    /**
+     * Check whether the given block and it's content are valid.
+     * @param block the block to be going through the check.
+     * @return true if this block is ready to added to the chain.
+     */
+    protected boolean IntegrityCheck(com.isaacsheff.charlotte.proto.Block block) {
+        /* TODO: Implement this */
+        return true;
     }
 }

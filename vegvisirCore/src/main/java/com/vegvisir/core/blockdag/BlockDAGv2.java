@@ -32,13 +32,13 @@ public class BlockDAGv2 extends BlockDAG {
     public void addBlocks(Iterable<Block> blocks) {
         com.isaacsheff.charlotte.proto.CryptoId blockId;
         for (Block block : blocks) {
-            blockId = block.getVegvisirBlock().getCryptoID();
+            blockId = block.getVegvisirBlock().getBlock().getCryptoID();
             if (blockchains.containsKey(blockId)) {
-                blockchains.get(block.getVegvisirBlock().getCryptoID()).appendBlock(block);
+                blockchains.get(block.getVegvisirBlock().getBlock().getCryptoID()).appendBlock(block);
             } else {
                 if (validatePeer(blockId)) {
                     addNewChain(blockId);
-                    blockchains.get(block.getVegvisirBlock().getCryptoID()).appendBlock(block);
+                    blockchains.get(block.getVegvisirBlock().getBlock().getCryptoID()).appendBlock(block);
                 }
             }
         }
@@ -93,7 +93,7 @@ public class BlockDAGv2 extends BlockDAG {
 
     /**
      * A frontier set of each chain can be represented by a vector clock. Therefore, we just need
-     * to return the vector clock of the last block on this node's blockchain.
+     * to return the vector clock of the last block of the blockchain for this node.
      * @return vector clock represented the frontier blocks of each blockchain.
      */
     @Override
