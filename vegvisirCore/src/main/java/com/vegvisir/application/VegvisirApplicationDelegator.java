@@ -10,6 +10,13 @@ public interface VegvisirApplicationDelegator {
 
 
     /**
+     * Vegvisir will call this function to init and run application.
+     * @param instance a underlying Vegvisir instance for application use.
+     */
+    public void init(VegvisirInstance instance);
+
+
+    /**
      * An application implemented function. This function will get called whenever a new transaction
      * subscribed by this application arrives.
      * @param tx the new transaction that this application may interest.
