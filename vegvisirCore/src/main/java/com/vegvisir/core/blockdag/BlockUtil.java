@@ -80,13 +80,6 @@ public class BlockUtil {
      * @return a string format of given id.
      */
     public static String cryptoId2Str(com.isaacsheff.charlotte.proto.CryptoId id) {
-        List<com.vegvisir.common.datatype.proto.ControlSignal> singals = new ArrayList<>();
-        singals.add(ControlSignal.PULL);
-        singals.add(ControlSignal.ADD_BLOCKS);
-        com.vegvisir.common.datatype.proto.Version.newBuilder()
-                .addAllSignals(singals)
-                .build();
-
         return id.getHash().getSha3().toStringUtf8();
     }
 
