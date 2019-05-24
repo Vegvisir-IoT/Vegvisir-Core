@@ -73,7 +73,9 @@ public class VirtualVegvisirInstance implements VegvisirInstance {
     public boolean registerApplicationDelegator(VegvisirApplicationContext context,
                                                 VegvisirApplicationDelegator delegator) {
         this.delegator = delegator;
-        this.notifyAll();
+        synchronized (this) {
+            this.notifyAll();
+        }
         return true;
     }
 
@@ -85,8 +87,12 @@ public class VirtualVegvisirInstance implements VegvisirInstance {
     private void poll() {
         while (true) {
             try {
-                if (delegator == null)
-                    this.wait();
+                if (delegator == null) {
+                    synchronized (this) {
+                        if (delegator == null)
+                            this.wait();
+                    }
+                }
                 delegator.applyTransaction(txQueue.take());
             } catch (InterruptedException ex) {
                 System.err.println("Interrupted transaction polling thread! Will exit.");
